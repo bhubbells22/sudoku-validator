@@ -1,15 +1,17 @@
+/* Author: Robert Hubbell */
+/* Description: This program checks for errors in a sudoku puzzle */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
 #include <sys/time.h>
 #include <stdbool.h>
 
-// 2D array for storing the puzzle is read-only global
+// 2D array to store puzzle provided
 int sudoku[9][9];
 
-// array for threads to report errors, each thread is mapped
-// and can only write to a single index in the array,
-// no need to lock.
+// store a valid bit for each row, column, and subgrid of puzzle,
+// 0 means unchecked or invalid.
 int valid[27] = {0};
 
 // functions to be passed to each thread 
@@ -19,7 +21,7 @@ void* validateGrid(void* args);
 
 int main (int argc, char* argv[])
 {
-  // put read values into buffer
+  // put read values into buffer, assuming properly formatted input
   int buffer[81];
   int next;
   int idx = 0;
